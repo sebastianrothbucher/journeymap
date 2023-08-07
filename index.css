@@ -1,6 +1,53 @@
 body {
     font-family: sans-serif;
 }
+
+.steps {
+    display: grid;
+    grid-template-columns: 140px;
+    grid-template-rows: repeat(4, auto);
+    grid-auto-flow: column;
+    font-size: 12px;
+    width: fit-content;
+}
+.step.initial, .step.instance {
+    display: contents;
+    margin-right: 20px;
+}
+.step.initial > *, .step.instance > * {
+    width: 140px;
+}
+
+.step.instance .main {
+    height: 70px;
+    max-width: 140px;
+    background-image: url('chevron.svg');
+    background-size: cover;
+    display: grid;
+}
+.step.instance .main > .smart-input {
+    display: inline-block;
+    align-self: center;
+    padding: 3px 17px 3px 23px;
+    width: 75%;
+}
+
+.step.initial .additional, .step.instance .additional {
+    margin-top: 10px;
+}
+
+.step.add {
+    display: grid;
+}
+.step.add > button {
+    align-self: end;
+}
+
+.step.instance .additional > .smart-input {
+    display: inline-block;
+    width: calc(100% - 10px);
+}
+
 a, .link {
     cursor: pointer; 
 }

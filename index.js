@@ -10,6 +10,7 @@ const store = new Vuex.Store({
             steps: [
                 {
                     id: uuid(),
+                    title: 'step1',
                 },
             ],
         },
@@ -46,12 +47,19 @@ const app = Vue.createApp({
 app.component('smart-input', {
     props: ['step', 'field'], // (just for info)
     template: `
-        <span @click="editing=true" class="smart-input" :className="editing ? null : (step[field] ? 'filled' : 'empty')">{{editing ? null : (step[field] || '-')}}<input type="text" :placeholder="field" :value="step[field] || ''" @blur="edit($event)" v-if="editing"/></span>
+        <span @click="startEdit" :className="'smart-input ' + (editing ? null : (step[field] ? 'filled' : 'empty'))">{{editing ? null : (step[field] || '-')}}<input type="text" ref="input" :placeholder="field" :value="step[field] || ''" @blur="edit($event)" @keydown.enter="edit($event)" v-if="editing"/></span>
     `,
     data: () => ({
         editing: false,
     }),
     methods: {
+        startEdit() {
+            this.editing = true;
+            setTimeout(() => {
+                this.$refs.input.focus();
+                this.$refs.input.select();
+            });
+        },
         edit(evnt) {
             this.editing = false;
             store.commit('EDIT_STEP', {step: this.step, field: this.field, value: evnt.target.value});

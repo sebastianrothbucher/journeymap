@@ -6,12 +6,17 @@
             <div class="steps">
                 <div class="step initial">
                     <div class="main"></div>
-                    <div class="additional team">Team</div>
+                    <div class="additional additional-example">Example</div>
+                    <div class="additional additional-team">Team</div>
+                    <div class="additional additional-ready">Ready</div>
                 </div>
                 <div class="step instance" v-for="s in active.steps">
-                    <div class="main">&gt;&gt; <smart-input :step="s" :field="'title'"></smart-input></div> <!-- TODO: chevron, css grid -->
+                    <div class="main"><smart-input :step="s" :field="'title'"></smart-input></div> <!-- TODO: chevron, css grid -->
+                    <div class="additional additional-example"><smart-input :step="s" :field="'example'"></smart-input></div>
                     <div class="additional additional-team"><smart-input :step="s" :field="'team'"></smart-input></div>
+                    <div class="additional additional-ready"><smart-input :step="s" :field="'ready'"></smart-input></div>
                 </div>
+                <div class="step add" @click="addStep"><button>+</button></div>
             </div>
         </div>
         <!-- dependencies for both offline and online (whoever wins)-->
