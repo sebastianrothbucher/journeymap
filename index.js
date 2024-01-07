@@ -16,10 +16,13 @@ const store = new Vuex.Store({
         },
     },
     mutations: {
-        ADD_STEP(state) {
-            state.active.steps.push({
+        ADD_STEP(state, {afterIndex}) {
+            state.active.steps.splice(afterIndex + 1, 0, {
                 id: uuid(),
             });
+        },
+        DELETE_STEP(state, {stepIndex}) {
+            state.active.steps.splice(stepIndex, 1);
         },
         EDIT_STEP(state, {step, field, value}) {
             step[field] = value;
@@ -32,6 +35,7 @@ const store = new Vuex.Store({
 const app = Vue.createApp({
     store,
     data: () => ({
+        checkedSteps: [], // 0, 1, 2, 3 - show next one depending on that
     }),
     computed: {
         active() {
@@ -39,8 +43,13 @@ const app = Vue.createApp({
         },
     },
     methods: {
-        addStep() {
-            store.commit('ADD_STEP');
+        addStep(afterIndex) {
+            store.commit('ADD_STEP', {afterIndex});
+        },
+        deleteStep(stepIndex) {
+            if (window.confirm('Sure delete?')) {
+                store.commit('DELETE_STEP', {stepIndex});
+            }
         },
     },
 });

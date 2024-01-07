@@ -2,6 +2,10 @@ body {
     font-family: sans-serif;
 }
 
+.navigate { /* right sidebar */
+    float: right;
+}
+
 .steps {
     display: grid;
     grid-template-columns: 140px;
@@ -24,6 +28,17 @@ body {
     background-image: url('chevron.svg');
     background-size: cover;
     display: grid;
+    position: relative;
+}
+.step.instance .main > .addstep {
+    position: absolute;
+    right: 3px;
+    top: -3px;
+}
+.step.instance .main > .deletestep {
+    position: absolute;
+    right: 3px;
+    bottom: -3px;
 }
 .step.instance .main > .smart-input {
     display: inline-block;
@@ -32,15 +47,14 @@ body {
     width: 75%;
 }
 
-.step.initial .additional, .step.instance .additional {
-    margin-top: 10px;
+.stepaction > button {
+    padding: 0;
+    width: 20px;
+    font-size: 10px;
 }
 
-.step.add {
-    display: grid;
-}
-.step.add > button {
-    align-self: end;
+.step.initial .additional, .step.instance .additional {
+    margin-top: 10px;
 }
 
 .step.instance .additional > .smart-input {
