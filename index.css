@@ -4,6 +4,20 @@ body {
 
 .navigate { /* right sidebar */
     float: right;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+.navigate button {
+    width: 100%;
+}
+.navigate button:not(.active):not(:hover) {
+    color: darkgrey;
+}
+.navigate span {
+    font-size: small;
+    display: inline-block;
+    margin: 20px 0;
 }
 
 .steps {
@@ -20,6 +34,13 @@ body {
 }
 .step.initial > *, .step.instance > * {
     width: 140px;
+}
+.step.initial > .additional {
+    color: darkgrey;
+}
+.step.initial > .additional.bold {
+    color: black;
+    font-weight: bold;
 }
 
 .step.instance .main {

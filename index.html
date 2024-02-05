@@ -4,27 +4,37 @@
     <body>
         <div id="app">
             <div class="navigate">
-                
+                <span>Build a great customer journey briefing</span>
+                <button class="matter-button-outlined" :class="{'active': 0===step}" @click="step=0">Steps</button>
+                <button class="matter-button-outlined" :class="{'active': 1===step}" @click="step=1">Example</button>
+                <button class="matter-button-outlined" :class="{'active': 2===step}" @click="step=2">Team</button>
+                <button class="matter-button-outlined" :class="{'active': 3===step}" @click="step=3">Ready</button>
+                <span v-if="0===step">Just add the steps a customer passes through - then proceed to next step.</span>
+                <span v-if="1===step">Give a concrete example like - "someone is searching for blue sneakers" - then proceed to next step.</span>
+                <span v-if="2===step">Specify which team is needed to make that step happen - then go to next step.</span>
+                <span v-if="3===step">Check off what's already ready to go</span>
             </div>
             <div class="steps">
                 <div class="step initial">
                     <div class="main"></div>
-                    <div class="additional additional-example">Example</div>
-                    <div class="additional additional-team">Team</div>
-                    <div class="additional additional-ready">Ready</div>
+                    <div class="additional additional-example" :class="{'bold': 1===step}">Example</div>
+                    <div class="additional additional-team" :class="{'bold': 2===step}">Team</div>
+                    <div class="additional additional-ready" :class="{'bold': 3===step}">Ready</div>
                 </div>
                 <div class="step instance" v-for="(s, i) in active.steps">
                     <div class="main">
-                        <div class="stepaction addstep" @click="addStep(i)"><button>➕</button></div>
-                        <smart-input :step="s" :field="'title'"></smart-input>
-                        <div class="stepaction deletestep" @click="deleteStep(i)"><button>🗑</button></div>
+                        <div class="stepaction addstep" @click="addStep(i)"><button :disabled="step!==0" :step="step">➕</button></div>
+                        <smart-input :step="s" :field="'title'" :disabled="step!==0"></smart-input>
+                        <div class="stepaction deletestep" @click="deleteStep(i)" v-if="i>0"><button :disabled="step!==0">🗑</button></div>
                     </div>
-                    <div class="additional additional-example"><smart-input :step="s" :field="'example'"></smart-input></div>
-                    <div class="additional additional-team"><smart-input :step="s" :field="'team'"></smart-input></div>
-                    <div class="additional additional-ready"><smart-input :step="s" :field="'ready'"></smart-input></div>
+                    <div class="additional additional-example"><smart-input :step="s" :field="'example'" :disabled="step!==1"></smart-input></div>
+                    <div class="additional additional-team"><smart-input :step="s" :field="'team'" :disabled="step!==2"></smart-input></div>
+                    <div class="additional additional-ready"><smart-input :step="s" :field="'ready'" :disabled="step!==3"></smart-input></div>
                 </div>
             </div>
         </div>
+        <hr>
+        <p><small>License: MIT - <a href="https://github.com/sebastianrothbucher/journeymap/">Code & Details</a></small></p>
         <!-- dependencies for both offline and online (whoever wins)-->
         <link rel="stylesheet" type="text/css" href="lib/matter.css"/>
         <link rel="stylesheet" type="text/css" href="https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css"/>

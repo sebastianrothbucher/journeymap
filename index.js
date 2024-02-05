@@ -36,6 +36,7 @@ const app = Vue.createApp({
     store,
     data: () => ({
         checkedSteps: [], // 0, 1, 2, 3 - show next one depending on that
+        step: 0,
     }),
     computed: {
         active() {
@@ -54,15 +55,18 @@ const app = Vue.createApp({
     },
 });
 app.component('smart-input', {
-    props: ['step', 'field'], // (just for info)
+    props: ['step', 'field', 'disabled'], // (just for info)
     template: `
-        <span @click="startEdit" :className="'smart-input ' + (editing ? null : (step[field] ? 'filled' : 'empty'))">{{editing ? null : (step[field] || '-')}}<input type="text" ref="input" :placeholder="field" :value="step[field] || ''" @blur="edit($event)" @keydown.enter="edit($event)" v-if="editing"/></span>
+        <span @click="startEdit" :className="'smart-input ' + (editing ? null : (step[field] ? 'filled' : 'empty'))">{{editing ? null : (step[field] || '-')}}<input type="text" ref="input" :disabled="disabled" :className="editing ? null : 'hidden'"  :placeholder="field" :value="step[field] || ''" @blur="edit($event)" @keydown.enter="edit($event)" v-if="editing"/></span>
     `,
     data: () => ({
         editing: false,
     }),
     methods: {
         startEdit() {
+            if (this.disabled) {
+                return;
+            }
             this.editing = true;
             setTimeout(() => {
                 this.$refs.input.focus();
